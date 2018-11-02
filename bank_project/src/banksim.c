@@ -57,8 +57,8 @@ int main (int argc, char *argv[]) {
     if(f == 0){
       close(to_atmfd[1]);
       close(to_bankfd[0]);
-      int atm_run = atm_run(argv[i],to_bankfd,to_atmfd,i);
-      if(atm_run != SUCCESS){
+      int a_r = atm_run(argv[i],to_bankfd[1],to_atmfd[0],i);
+      if(a_r != SUCCESS){
         error_print();
         exit(0);
       }
@@ -73,10 +73,20 @@ int main (int argc, char *argv[]) {
   int f = fork();
   if(f == 0){
     bank_open(atm_count,account_count);
-    int run_bank = run_bank(bank_in_fd,atm_out_fd);
-    if(run_bank != SUCCESS){
+    int r_b = run_bank(bank_in_fd,atm_out_fd);
+    if(r_b != SUCCESS){
       error_print();
     }
     bank_dump();
     exit(0);
+  }
+
+  // Wait for each of the child processes to complete. We include
+  // atm_count to include the bank process (i.e., this is not a
+  // fence post error!)
+  for (int i = 0; i <= atm_count; i++) {
+    wait(NULL);
+  }
+
+  return 0;
 }
