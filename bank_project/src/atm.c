@@ -78,38 +78,38 @@ int atm(int bank_out_fd, int atm_in_fd, int atm_id, Command *cmd)
   int status = SUCCESS;
 
   // TODO: your code here
-  if(atm_id != i) {
-    error_msg(ERR_UNKNOWN_ATM, "not the same ATM ID");
-    return ERR_UNKNOWN_ATM;
-  }
-
-  status = checked_write(bank_out_fd, cmd, MESSAGE_SIZE);
-
-  if(status != SUCCESS){
-    return status;
-  }
-
-  status = checked_read(atm_in_fd, &atmcmd, MESSAGE_SIZE);
-
-  if(status != SUCCESS){
-    return status;
-  }
-
-  cmd_unpack(atmcmd, &c, &i, &f, &t, &a);
-
-  if(c = "OK"){
-    status = SUCCESS;
-  }
-  else if(c = "NOFUNDS"){
-    status = ERR_NOFUNDS;
-  }
-  else if(c = "ACCUNKN"){
-    status = ACC_UNKN;
-  }
-  else{
-    error_msg(ERR_UNKNOWN_CMD, "unknown command");
-    status = ERR_UNKNOWN_CMD;
-  }
+  // if(atm_id != i) {
+  //   error_msg(ERR_UNKNOWN_ATM, "not the same ATM ID");
+  //   return ERR_UNKNOWN_ATM;
+  // }
+  //
+  // status = checked_write(bank_out_fd, cmd, MESSAGE_SIZE);
+  //
+  // if(status != SUCCESS){
+  //   return status;
+  // }
+  //
+  // status = checked_read(atm_in_fd, &atmcmd, MESSAGE_SIZE);
+  //
+  // if(status != SUCCESS){
+  //   return status;
+  // }
+  //
+  // cmd_unpack(atmcmd, &c, &i, &f, &t, &a);
+  //
+  // if(c = "OK"){
+  //   status = SUCCESS;
+  // }
+  // else if(c = "NOFUNDS"){
+  //   status = ERR_NOFUNDS;
+  // }
+  // else if(c = "ACCUNKN"){
+  //   status = ACC_UNKN;
+  // }
+  // else{
+  //   error_msg(ERR_UNKNOWN_CMD, "unknown command");
+  //   status = ERR_UNKNOWN_CMD;
+  // }
 
   return status;
 }
