@@ -190,12 +190,14 @@ int bank(int atm_out_fd[], Command *cmd, int *atms_remaining)
 
   //withdraw
   if(c == WITHDRAW){
-    if(check_valid_account(t) == SUCCESS){
+    if(check_valid_account(f) == SUCCESS){
       if(accounts[f] >= a){
         accounts[f] -= a;
         MSG_OK(&bankcmd,0,f,t,a);
       }
-      MSG_NOFUNDS(&bankcmd,0,f,a);
+      else{
+        MSG_NOFUNDS(&bankcmd,0,f,a);
+      }
     }
     else{
       MSG_ACCUNKN(&bankcmd,0,f);
