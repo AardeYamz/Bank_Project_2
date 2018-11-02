@@ -198,7 +198,7 @@ int bank(int atm_out_fd[], Command *cmd, int *atms_remaining)
       MSG_NOFUNDS(&bankcmd,0,f,a);
     }
     else{
-      MSG_ACCUNKN(&bankcmd,0,t);
+      MSG_ACCUNKN(&bankcmd,0,f);
     }
     result = checked_write(atm_out_fd[i], &bankcmd, MESSAGE_SIZE);
   }
@@ -208,14 +208,31 @@ int bank(int atm_out_fd[], Command *cmd, int *atms_remaining)
     if(check_valid_account(t) == SUCCESS && check_valid_account(f) == SUCCESS){
       if(accounts[f] >= a){
         accounts[f] -= a;
+        accounts[t] += a;
         MSG_OK(&bankcmd,0,f,t,a);
       }
+      else{
         MSG_NOFUNDS(&bankcmd,0,f,a);
+      }
     }
     else{
       MSG_ACCUNKN(&bankcmd,0,t);
     }
       result = checked_write(atm_out_fd[i], &bankcmd, MESSAGE_SIZE);
+  }
+  //balance
+  if(c == BALANCE){
+    if(check_valid_account(f) == SUCCESS){
+      a = accounts[i];
+      MSG_OK(&bankcmd,0,f,t,a);
+    }
+    else{
+      MSG_ACCUNKN(&bankcmd,0,t);
+    }
+    result = checked_write(atm_out_fd[i], &bankcmd, MESSAGE_SIZE);
+  }
+  if(c!= CONNECT && c!= EXIT && c != DEPOSIT && c!= TRANSFER && c!= BALANCE && c!= WITHDRAW){
+    result = ERR_UNKNOWN_CMD;
   }
 
   return result;
