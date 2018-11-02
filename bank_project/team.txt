@@ -1,7 +1,8 @@
 Name:
-
+Yannis Lam
 Name(s) of teammates:
-
+David Giang
 Contributions of each team member:
-
+Yannis primarily worked on the bank.c file and GitHub integration. David primarily worked on the atm.c file and banksim.c file.
 What made this team successful or unsuccessful (tools/apps, communication, etc.)?
+We used GitHub to share progress on this project. We communicated through a messaging app and also through talking in real life.

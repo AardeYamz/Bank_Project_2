@@ -172,7 +172,7 @@ int bank(int atm_out_fd[], Command *cmd, int *atms_remaining)
   //exit
   if(c == EXIT){
     MSG_OK(&bankcmd,0,f,t,a);
-    atms_remaining--;
+    (*atms_remaining)--;
     result = checked_write(atm_out_fd[i], &bankcmd, MESSAGE_SIZE);
   }
 
