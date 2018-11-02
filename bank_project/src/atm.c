@@ -78,6 +78,7 @@ int atm(int bank_out_fd, int atm_in_fd, int atm_id, Command *cmd)
   int status = SUCCESS;
 
   // TODO: your code here
+<<<<<<< HEAD
   // if(atm_id != i) {
   //   error_msg(ERR_UNKNOWN_ATM, "not the same ATM ID");
   //   return ERR_UNKNOWN_ATM;
@@ -110,6 +111,44 @@ int atm(int bank_out_fd, int atm_in_fd, int atm_id, Command *cmd)
   //   error_msg(ERR_UNKNOWN_CMD, "unknown command");
   //   status = ERR_UNKNOWN_CMD;
   // }
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> f2e49271e58da790644d10ae55b8c3e8e4cbb3f7
+  if(atm_id != i) {
+    error_msg(ERR_UNKNOWN_ATM, "not the same ATM ID");
+    return ERR_UNKNOWN_ATM;
+  }
+
+  status = checked_write(bank_out_fd, cmd, MESSAGE_SIZE);
+
+  if(status != SUCCESS){
+    return status;
+  }
+
+  status = checked_read(atm_in_fd, &atmcmd, MESSAGE_SIZE);
+
+  if(status != SUCCESS){
+    return status;
+  }
+
+  cmd_unpack(&atmcmd, &c, &i, &f, &t, &a);
+
+  if(c == OK){
+    status = SUCCESS;
+  }
+  else if(c == NOFUNDS){
+    status = ERR_NOFUNDS;
+  }
+  else if(c == ACCUNKN){
+    status = ERR_UNKNOWN_ACCOUNT;
+  }
+  else{
+    error_msg(ERR_UNKNOWN_CMD, "unknown command");
+    status = ERR_UNKNOWN_CMD;
+  }
+>>>>>>> bf8177783d536ac935cbebfcbaf5efe08efe6330
 
   return status;
 }
