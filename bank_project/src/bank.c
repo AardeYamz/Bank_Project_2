@@ -158,7 +158,16 @@ int bank(int atm_out_fd[], Command *cmd, int *atms_remaining)
   int result = SUCCESS;
 
   // TODO: your code here
+  //atm valid
+  if(check_valid_atm(i) != SUCCESS) {
+    return ERR_UNKNOWN_ATM;
+  }
 
+  //connect
+  if(c == CONNECT){
+    MSG_OK(&bankcmd,0,f,t,a);
+    result = write();
+  }
 
   return result;
 }
@@ -274,4 +283,3 @@ int run_bank(int bank_in_fd[], int atm_out_fd[])
 
   return SUCCESS;
 }
-
