@@ -78,10 +78,6 @@ int atm(int bank_out_fd, int atm_in_fd, int atm_id, Command *cmd)
   int status = SUCCESS;
 
   // TODO: your code here
-<<<<<<< HEAD
-=======
-  //YANNIS
->>>>>>> 0996fec8dd6db18729cde2541f601cbf2944c74e
   if(atm_id != i) {
     error_msg(ERR_UNKNOWN_ATM, "not the same ATM ID");
     return ERR_UNKNOWN_ATM;
@@ -167,7 +163,3 @@ int atm_run(const char *trace, int bank_out_fd, int atm_in_fd, int atm_id)
 
   return SUCCESS;
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> 474a06e1636e7856956b501018c33a238dc357f9
