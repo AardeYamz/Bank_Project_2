@@ -78,10 +78,7 @@ int atm(int bank_out_fd, int atm_in_fd, int atm_id, Command *cmd)
   int status = SUCCESS;
 
   // TODO: your code here
-<<<<<<< HEAD
 
-=======
->>>>>>> f2e49271e58da790644d10ae55b8c3e8e4cbb3f7
   if(atm_id != i) {
     error_msg(ERR_UNKNOWN_ATM, "not the same ATM ID");
     return ERR_UNKNOWN_ATM;
