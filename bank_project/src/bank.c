@@ -166,7 +166,56 @@ int bank(int atm_out_fd[], Command *cmd, int *atms_remaining)
   //connect
   if(c == CONNECT){
     MSG_OK(&bankcmd,0,f,t,a);
-    result = write();
+    result = checked_write(atm_out_fd[i], &bankcmd, MESSAGE_SIZE);
+  }
+
+  //exit
+  if(c == EXIT){
+    MSG_OK(&bankcmd,0,f,t,a);
+    atms_remaining--;
+    result = checked_write(atm_out_fd[i], &bankcmd, MESSAGE_SIZE);
+  }
+
+  //deposit
+  if(c == DEPOSIT){
+    if(check_valid_account(t) == SUCCESS){
+      accounts[t] += a;
+      MSG_OK(&bankcmd,0,f,t,a);
+    }
+    else{
+      MSG_ACCUNKN(&bankcmd,0,t);
+    }
+    result = checked_write(atm_out_fd[i], &bankcmd, MESSAGE_SIZE);
+  }
+
+  //withdraw
+  if(c == WITHDRAW){
+    if(check_valid_account(t) == SUCCESS){
+      if(accounts[f] >= a){
+        accounts[f] -= a;
+        MSG_OK(&bankcmd,0,f,t,a);
+      }
+      MSG_NOFUNDS(&bankcmd,0,f,a);
+    }
+    else{
+      MSG_ACCUNKN(&bankcmd,0,t);
+    }
+    result = checked_write(atm_out_fd[i], &bankcmd, MESSAGE_SIZE);
+  }
+
+  //transfer
+  if(c == TRANSFER){
+    if(check_valid_account(t) == SUCCESS && check_valid_account(f) == SUCCESS){
+      if(accounts[f] >= a){
+        accounts[f] -= a;
+        MSG_OK(&bankcmd,0,f,t,a);
+      }
+        MSG_NOFUNDS(&bankcmd,0,f,a);
+    }
+    else{
+      MSG_ACCUNKN(&bankcmd,0,t);
+    }
+      result = checked_write(atm_out_fd[i], &bankcmd, MESSAGE_SIZE);
   }
 
   return result;
