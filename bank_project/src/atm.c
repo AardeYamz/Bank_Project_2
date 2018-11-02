@@ -78,7 +78,7 @@ int atm(int bank_out_fd, int atm_in_fd, int atm_id, Command *cmd)
   int status = SUCCESS;
 
   // TODO: your code here
-  //YANNIS
+
   if(atm_id != i) {
     error_msg(ERR_UNKNOWN_ATM, "not the same ATM ID");
     return ERR_UNKNOWN_ATM;
@@ -96,16 +96,16 @@ int atm(int bank_out_fd, int atm_in_fd, int atm_id, Command *cmd)
     return status;
   }
 
-  cmd_unpack(atmcmd, &c, &i, &f, &t, &a);
+  cmd_unpack(&atmcmd, &c, &i, &f, &t, &a);
 
-  if(c = "OK"){
+  if(c == OK){
     status = SUCCESS;
   }
-  else if(c = "NOFUNDS"){
+  else if(c == NOFUNDS){
     status = ERR_NOFUNDS;
   }
-  else if(c = "ACCUNKN"){
-    status = ACC_UNKN;
+  else if(c == ACCUNKN){
+    status = ERR_UNKNOWN_ACCOUNT;
   }
   else{
     error_msg(ERR_UNKNOWN_CMD, "unknown command");
